@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "2394564260",
     "id" : "232C23D1",
-    "lastKnownWriteTime" : 1510937969,
-    "last_content_update" : 1510937969939,
+    "lastKnownWriteTime" : 1510938034,
+    "last_content_update" : 1510938034464,
     "path" : "~/Documents/data science/homework/p8105_hw6_p3/index.Rmd",
     "project_path" : "index.Rmd",
     "properties" : {
-        "cursorPosition" : "3,0",
-        "scrollLine" : "0"
+        "cursorPosition" : "8,411",
+        "scrollLine" : "4"
     },
     "relative_order" : 2,
     "source_on_save" : false,
