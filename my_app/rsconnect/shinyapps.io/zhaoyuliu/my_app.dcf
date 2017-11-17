@@ -5,6 +5,6 @@ account: zhaoyuliu
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 236748
-bundleId: 1081518
+bundleId: 1081599
 url: https://zhaoyuliu.shinyapps.io/my_app/
-when: 1510941426.82384
+when: 1510944218.40687
