@@ -1,0 +1,11 @@
+name: "Homework 6"
+output_dir: "."
+navbar:
+  title: "Homework 6"
+  right:
+    - text: "Probelm 1--Dashboard"
+      href: 
+    - text: "Probelm 2--Shiny"
+      href: 
+output:
+  html_document
