@@ -3,9 +3,9 @@ output_dir: "."
 navbar:
   title: "Homework 6"
   right:
-    - text: "Probelm 1--Dashboard"
+    - text: "Problem 1--Dashboard"
       href: p8105_hw6_hz2507.html
-    - text: "Probelm 2--Shiny"
+    - text: "Problem 2--Shiny"
       href: https://zhaoyuliu.shinyapps.io/my_app/
 output:
   html_document
