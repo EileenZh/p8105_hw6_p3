@@ -1,0 +1,62 @@
+---
+title: "p8105_hw6"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(janitor)
+library(stringr)
+library(forcats)
+library(viridis)
+library(plotly)
+
+nynoaa=read_csv("./data/nynoaadat.zip",col_types = "cDiiidd") %>%
+  clean_names()%>%
+  separate(date, into = c("year", "month", "day"))%>%
+  filter(!is.na(tmin), !is.na(tmax), !is.na(snow))
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Trend of tmax and tmin by snowfall
+
+```{r}
+tmin_tmax_snow = nynoaa%>%
+  mutate(tmin = tmin/10, tmax = tmax/10) %>%
+  filter(snow < 100, snow > 0, year>2005) %>%
+  mutate(text_label = str_c("snow(mm): ", snow, "\nmonth: ", month, "\nyear: ", year)) 
+plot_ly(tmin_tmax_snow, x = ~ tmax, y = ~ tmin, size = ~snow, type = "scatter", mode = "markers", 
+        text = ~text_label, color = ~snow)
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Boxplots of snowfall distribution by month
+
+```{r}
+nynoaa%>%
+  mutate(snow = as.numeric(snow), year = as.character(year), month = as.character(month))%>%
+  filter(snow>0,snow<100, year>2005) %>%
+  plot_ly(x = ~ month, y = ~snow, color = ~ month, type = "box",  colors = "Set2")
+```
+
+### Snowfall counts by year
+
+```{r}
+scatter_ggplot = nynoaa %>%
+  mutate(snow = as.numeric(snow), year = as.character(year), month = as.character(month))%>%
+  filter(snow>0,snow<100, year>2005) %>%
+  ggplot(aes(x = snow, fill = year)) +
+  geom_bar()
+ggplotly(scatter_ggplot)
+```
+
+
+

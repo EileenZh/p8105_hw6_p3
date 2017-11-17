@@ -4,8 +4,8 @@ navbar:
   title: "Homework 6"
   right:
     - text: "Probelm 1--Dashboard"
-      href: 
+      href: p8105_hw6_hz2507.html
     - text: "Probelm 2--Shiny"
-      href: 
+      href: https://zhaoyuliu.shinyapps.io/my_app/
 output:
   html_document

@@ -1,0 +1,84 @@
+---
+title: "p8105_hw6_p2"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: row
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(janitor)
+library(stringr)
+library(forcats)
+library(viridis)
+library(plotly)
+library(shiny)
+library(rsconnect)
+rsconnect::setAccountInfo(name='zhaoyuliu',
+			  token='04552A741DEA862EB2F9F7EC8B10EC0D',
+			  secret='89FnadtkVhpA6buaqjqx2u+LXKpNz8zm4fjdJxlf')
+
+nynoaa=read_csv("nynoaa.csv")
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+# SelectInput widget
+year = nynoaa %>% distinct(year) %>% filter(year > 2005) %>% pull()
+
+selectInput("year_choice", label = h3("Year(from 2006 to 2010)"),
+            choices = year, selected = "2006")
+
+# radioButtons widget
+month = nynoaa %>% distinct(month) %>% filter(month %in% c("11", "12", "01")) %>% pull()
+
+radioButtons("month_choice", label = h3("Choose a month (from November to January)"),
+    choices = month, selected = "01")
+```
+
+
+Row
+-----------------------------------------------------------------------
+
+### Trend of tmax and tmin by snowfall
+
+```{r}
+renderPlotly({ 
+tmin_tmax_snow = nynoaa%>%
+  filter(year == input$year_choice, month %in% input$month_choice) %>%
+  mutate(text_label = str_c("snow(mm): ", snow, "\nmonth: ", month, "\nyear: ", year)) 
+
+plot_ly(tmin_tmax_snow, x = ~tmax, y = ~tmin, size = ~snow, type = "scatter", mode = "markers", 
+        text = ~text_label, color = ~snow)
+})
+```
+
+Row {.tabset .tabset-fade}
+-----------------------------------------------------------------------
+
+### Boxplots of snowfall distribution by month
+
+```{r}
+renderPlotly({
+nynoaa %>%
+  filter(year == input$year_choice,month %in% input$month_choice) %>%
+  plot_ly(x = ~month, y = ~snow, color = ~month, type = "box",  colors = "Set2")
+})
+```
+
+### Snowfall counts by year
+
+```{r}
+renderPlotly({
+bar_ggplot = nynoaa %>%
+  filter(year == input$year_choice, month %in% input$month_choice) %>%
+  ggplot(aes(x = snow, fill = year)) +
+  geom_bar()
+ggplotly(bar_ggplot)
+})
+```
+
